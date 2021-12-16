@@ -28,6 +28,11 @@ int main(){
     createNodeAtPosition(0, 3);
     createNodeAtPosition(150, 5);
 
+    deleteNodeAtEnd();
+    deleteNodeAtBeginning();
+
+    deleteNodeAtPosition(3);
+
     traverse();
 }
 
@@ -82,7 +87,65 @@ void createNodeAtPosition(int n, int pos){
     }
 }
 
+void deleteNodeAtEnd(){
+    if(head == NULL){
+        printf("Linked List is Empty.\n");
+        return;
+    }
+
+    struct node* temp1 = head;
+    struct node* temp2 = head;
+
+    while(temp1->next != NULL){
+        temp1 = temp1->next;
+    }
+
+    while(temp2->next != temp1){
+        temp2 = temp2->next;
+    }
+
+    temp2->next = NULL;
+    free(temp1);
+}
+
+void deleteNodeAtBeginning(){
+    if(head == NULL){
+        printf("Linked List is Empty.\n");
+        return;
+    }
+
+    struct node* temp = head;
+    head = head->next;
+    free(temp);
+}
+
+void deleteNodeAtPosition(int pos){
+    if(head == NULL){
+        printf("Linked List is Empty.\n");
+        return;
+    }
+
+    struct node* temp1 = head;
+    struct node* temp2 = head;
+
+    for(int i = 1; i < pos; i++){
+        temp1 = temp1->next;
+    }
+
+    for(int i = 1; i < pos-1; i++){
+        temp2 = temp2->next;
+    }
+
+    temp2->next = temp1->next;
+    free(temp1);
+}
+
 void traverse(){
+    if(head == NULL){
+        printf("Linked List is Empty.\n");
+        return;
+    }
+
     struct node* temp = head;
     while(temp != NULL){
         printf("%d -----> ", temp->data);
